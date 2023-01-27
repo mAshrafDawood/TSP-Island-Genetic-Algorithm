@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <omp.h>
 
 #include "utils.hpp"
@@ -10,7 +11,7 @@ std::vector<int> &shuffle(std::vector<int> &array, size_t n)
     int t;
 
     if (n <= 1)
-        return;
+        return array;
 
     // Shuffle
     for (i = 0; i < n - 1; i++)
@@ -29,9 +30,10 @@ void mutate(std::vector<int> &individual, size_t n, float mutation_rate)
         return;
 
     int r1 = rand() / (RAND_MAX / (n - 1));
+    int r2;
     do
     {
-        int r2 = rand() / (RAND_MAX / (n - 1));
+        r2 = rand() / (RAND_MAX / (n - 1));
     } while (r1 == r2);
 
     // Mutate
@@ -52,11 +54,11 @@ void crossover(std::vector<int> &first_parent, std::vector<int> &second_parent, 
         return;
 
     int r1 = rand() / (RAND_MAX / (n - 1));
+    int r2;
     do
     {
-        int r2 = rand() / (RAND_MAX / (n - 1));
+        r2 = rand() / (RAND_MAX / (n - 1));
     } while (r1 == r2);
-
     for (int i = std::min(r1, r2); i < std::max(r1, r2); i++)
     {
         first_offspring[i] = first_parent[i];
@@ -83,10 +85,10 @@ void crossover(std::vector<int> &first_parent, std::vector<int> &second_parent, 
 
 std::vector<std::vector<int>> read_table(std::vector<std::vector<int>> &distance_table)
 {
-    freopen("./data.txt", "r", std::stdin);
-    for (i = 0; i < 48; i++)
+    freopen("./data.txt", "r", stdin);
+    for (int i = 0; i < 48; i++)
     {
-        for (j = 0; j < 48; j++)
+        for (int j = 0; j < 48; j++)
         {
             std::cin >> distance_table[i][j];
         }

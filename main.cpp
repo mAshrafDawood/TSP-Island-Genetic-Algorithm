@@ -5,7 +5,7 @@
 #include <omp.h>
 #include "mpi.h"
 
-#include "utils.cpp"
+#include "utils.hpp"
 
 #define THREADS 4
 #define DATA_SIZE 48
